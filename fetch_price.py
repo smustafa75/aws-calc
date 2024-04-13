@@ -20,7 +20,12 @@ def get_ec2_prices(region, instance_type, operating_system, tenancy):
         ],
         MaxResults=10
     )
-    response1=pricing_client.get_products(ServiceCode='AmazonEC2',MaxResults=10)
+    response1=pricing_client.get_products(ServiceCode='AmazonEC2',
+                                          Filters=[
+                                              {'Type': 'TERM_MATCH', 'Field': 'instanceType', 'Value': instance_type},
+                                                {'Type': 'TERM_MATCH', 'Field': 'location', 'Value': region}],
+                                          MaxResults=10)
+    print(response1)
 
 
     prices = []
@@ -52,7 +57,7 @@ def get_s3_prices(region, storage_type):
     return prices
 
 # Specify the AWS region, instance type, operating system, and tenancy for EC2
-ec2_region = 'me-south-1'  # Bahrain region
+ec2_region = 'us-east-1'  # Bahrain region
 instance_type = 't3.micro'
 operating_system = 'Linux'
 tenancy = 'Shared'

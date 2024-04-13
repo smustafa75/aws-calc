@@ -1,8 +1,12 @@
 import boto3
 import json
 
+aws_access_key_id = 'AKIARLCVVW3ZYCH2UL7E'
+aws_secret_access_key = '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'
+session = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
 def get_ec2_prices(region, instance_type, operating_system, tenancy):
-    pricing_client = boto3.client('pricing', region_name='us-east-1')
+    pricing_client = session.client('pricing', region_name='us-east-1')
 
     response = pricing_client.get_products(
         ServiceCode='AmazonEC2',
@@ -16,9 +20,11 @@ def get_ec2_prices(region, instance_type, operating_system, tenancy):
         ],
         MaxResults=10
     )
+    response1=pricing_client.get_products(ServiceCode='AmazonEC2',MaxResults=10)
+
 
     prices = []
-    for price_item in response['PriceList']:
+    for price_item in response1['PriceList']:
         price_item_json = json.loads(price_item)
         price = price_item_json['terms']['OnDemand'][list(price_item_json['terms']['OnDemand'].keys())[0]]['priceDimensions'][list(price_item_json['terms']['OnDemand'][list(price_item_json['terms']['OnDemand'].keys())[0]]['priceDimensions'].keys())[0]]['pricePerUnit']['USD']
         prices.append(float(price))
@@ -26,7 +32,7 @@ def get_ec2_prices(region, instance_type, operating_system, tenancy):
     return prices
 
 def get_s3_prices(region, storage_type):
-    pricing_client = boto3.client('pricing', region_name='us-east-1')
+    pricing_client = session.client('pricing', region_name='us-east-1')
 
     response = pricing_client.get_products(
         ServiceCode='AmazonS3',

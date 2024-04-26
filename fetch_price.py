@@ -1,6 +1,8 @@
 import boto3
 import json
 from pkg_resources import resource_filename
+import csv
+import pandas
 
 aws_access_key_id = 'AKIARLCVVW3ZYCH2UL7E'
 aws_secret_access_key = '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'
@@ -67,3 +69,8 @@ ec2_prices = get_ec2_prices(ec2_region, instance_type, operating_system, tenancy
 print(f"Prices of {instance_type} instances with {operating_system} and {tenancy} tenancy in {ec2_region}:")
 for price in ec2_prices:
     print(f"${price} per hour")
+
+
+inst_list= pandas.read_csv('inventory.csv',header=0,
+        usecols=["inst_type", "monthly_cost", ])
+print(inst_list)

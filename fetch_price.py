@@ -12,11 +12,11 @@ def get_ec2_prices(region, instance_type, operating_system, tenancy):
         ServiceCode='AmazonEC2',
         Filters=[
             {'Type': 'TERM_MATCH', 'Field': 'location', 'Value': region},
-            {'Type': 'TERM_MATCH', 'Field': 'instanceType', 'Value': instance_type},
-            {'Type': 'TERM_MATCH', 'Field': 'operatingSystem', 'Value': operating_system},
-            {'Type': 'TERM_MATCH', 'Field': 'preInstalledSw', 'Value': 'NA'},
-            {'Type': 'TERM_MATCH', 'Field': 'tenancy', 'Value': tenancy},
-            {'Type': 'TERM_MATCH', 'Field': 'capacitystatus', 'Value': 'Used'}
+            #{'Type': 'TERM_MATCH', 'Field': 'instanceType', 'Value': instance_type},
+            #{'Type': 'TERM_MATCH', 'Field': 'operatingSystem', 'Value': operating_system},
+            #{'Type': 'TERM_MATCH', 'Field': 'preInstalledSw', 'Value': 'NA'},
+            #{'Type': 'TERM_MATCH', 'Field': 'tenancy', 'Value': tenancy},
+            #{'Type': 'TERM_MATCH', 'Field': 'capacitystatus', 'Value': 'Used'}
         ],
         MaxResults=10
     )
@@ -25,15 +25,21 @@ def get_ec2_prices(region, instance_type, operating_system, tenancy):
                                               {'Type': 'TERM_MATCH', 'Field': 'instanceType', 'Value': instance_type},
                                                 {'Type': 'TERM_MATCH', 'Field': 'location', 'Value': region}],
                                           MaxResults=10)
-    print(response1)
 
-
+    if 'PriceList' not in response:
+        print(f"No prices found for the specified filters: {region}, {instance_type}, {operating_system}, {tenancy}")
+        return []
+    
     prices = []
     for price_item in response1['PriceList']:
         price_item_json = json.loads(price_item)
-        price = price_item_json['terms']['OnDemand'][list(price_item_json['terms']['OnDemand'].keys())[0]]['priceDimensions'][list(price_item_json['terms']['OnDemand'][list(price_item_json['terms']['OnDemand'].keys())[0]]['priceDimensions'].keys())[0]]['pricePerUnit']['USD']
-        prices.append(float(price))
+        try:
+            price = price_item_json['terms']['OnDemand'][list(price_item_json['terms']['OnDemand'].keys())[0]]['priceDimensions'][list(price_item_json['terms']['OnDemand'][list(price_item_json['terms']['OnDemand'].keys())[0]]['priceDimensions'].keys())[0]]['pricePerUnit']['USD']
+            prices.append(float(price))
+        except (KeyError, IndexError):
+            print(f"Error parsing price for item: {price_item}")
 
+    print(prices)
     return prices
 
 def get_s3_prices(region, storage_type):

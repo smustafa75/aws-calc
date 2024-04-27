@@ -1,11 +1,10 @@
 import boto3
 import json
 from pkg_resources import resource_filename
-import csv
-import pandas
 
 aws_access_key_id = 'AKIARLCVVW3ZYCH2UL7E'
 aws_secret_access_key = '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'
+
 session = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
 def get_ec2_prices(region, instance_type, operating_system, tenancy):
@@ -13,7 +12,6 @@ def get_ec2_prices(region, instance_type, operating_system, tenancy):
 
     response = pricing_client.get_products(
         ServiceCode='AmazonEC2',
- 
     Filters=[
       {"Field": "tenancy", "Value": "shared", "Type": "TERM_MATCH"},
       {"Field": "operatingSystem", "Value": operating_system, "Type": "TERM_MATCH"},
@@ -41,7 +39,6 @@ MaxResults=10
     print(prices)
     return prices
 
-
 def get_region_name(region_code):
     default_region = 'US East (N. Virginia)'
     endpoint_file = resource_filename('botocore', 'data/endpoints.json')
@@ -52,9 +49,7 @@ def get_region_name(region_code):
         return data['partitions'][0]['regions'][region_code]['description'].replace('Europe', 'EU')
     except IOError:
         return default_region
-
-
-# Specify the AWS region, instance type, operating system, and tenancy for EC2
+    
 # Specify the AWS region, instance type, operating system, and tenancy for EC2
 target_region = "me-south-1"
 ec2_region = get_region_name(target_region)  # Bahrain region
@@ -70,7 +65,3 @@ print(f"Prices of {instance_type} instances with {operating_system} and {tenancy
 for price in ec2_prices:
     print(f"${price} per hour")
 
-
-inst_list= pandas.read_csv('inventory.csv',header=0,
-        usecols=["inst_type", "monthly_cost", ])
-print(inst_list)

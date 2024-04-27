@@ -1,8 +1,8 @@
 import boto3
 import json
 from pkg_resources import resource_filename
-aws_access_key_id = 'AKIARLCVVW3ZYCH2UL7E'
-aws_secret_access_key = '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'
+aws_access_key_id = ''
+aws_secret_access_key = ''
 client = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 # Search product filter. This will reduce the amount of data returned by the
 # get_products function of the Pricing API

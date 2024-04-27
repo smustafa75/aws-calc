@@ -2,8 +2,8 @@ import boto3
 import json
 from pkg_resources import resource_filename
 
-aws_access_key_id = 'AKIARLCVVW3ZYCH2UL7E'
-aws_secret_access_key = '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'
+aws_access_key_id = ''
+aws_secret_access_key = ''
 
 session = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 

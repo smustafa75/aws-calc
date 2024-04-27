@@ -2,11 +2,12 @@ import boto3
 import json
 from pkg_resources import resource_filename
 import csv
-import pandas
+import pandas as pd
 
-aws_access_key_id = 'AKIARLCVVW3ZYCH2UL7E'
-aws_secret_access_key = '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'
-session = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
+#session = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+session = boto3.Session(profile_name="personal")
+credentials = session.get_credentials()
 
 def get_ec2_prices(region, instance_type, operating_system, tenancy):
     pricing_client = session.client('pricing', region_name='us-east-1')
@@ -71,6 +72,6 @@ for price in ec2_prices:
     print(f"${price} per hour")
 
 
-inst_list= pandas.read_csv('inventory.csv',header=0,
-        usecols=["inst_type", "monthly_cost", ])
+inst_list= pd.read_csv('inventory.csv')
+
 print(inst_list)

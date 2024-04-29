@@ -11,7 +11,7 @@ credentials = session.get_credentials()
 
 def get_ec2_prices(region, instance_type, operating_system, tenancy):
     pricing_client = session.client('pricing', region_name='us-east-1')
-    print(instance_type.strip())
+    print(instance_type)
 
 
     response = pricing_client.get_products(
@@ -21,7 +21,7 @@ def get_ec2_prices(region, instance_type, operating_system, tenancy):
       {"Field": "tenancy", "Value": "shared", "Type": "TERM_MATCH"},
       {"Field": "operatingSystem", "Value": operating_system, "Type": "TERM_MATCH"},
       {"Field": "preInstalledSw", "Value": 'NA', "Type": "TERM_MATCH"},
-      {"Field": "instanceType", "Value": instance_type.strip(), "Type": "TERM_MATCH"},
+      {"Field": "instanceType", "Value": instance_type, "Type": "TERM_MATCH"},
       {"Field": "location", "Value": region, "Type": "TERM_MATCH"},
       {"Field": "capacitystatus", "Value": "Used", "Type": "TERM_MATCH"}
 ],
@@ -73,23 +73,32 @@ tenancy = 'Shared'
 ##for price in ec2_prices:
 ##    print(f"${price} per hour")
 
-
+pickcol=["inst_type"]
+#inst_list= pd.read_csv('inventory.csv', index_col="inst_type", usecols=pickcol)
 inst_list= pd.read_csv('inventory.csv')
 
-#print(inst_list)
+print(inst_list)
+#print(inst_list.columns)
+#print(inst_list.info)
 #print(inst_list.inst_type.to_string(index=False))
 #print(len(inst_list.inst_type))
-
+#print(inst_list.head())
 count = 0
-
-while count <= len(inst_list.inst_type):
-    # Get the prices of EC2 instances
-    clean_inst =inst_list.inst_type.replace('\n','',regex=True)
-
-    ec2_prices = get_ec2_prices(ec2_region, clean_inst.to_string(index=False), operating_system, tenancy)
-    for price in ec2_prices:
-        print(f"Prices of {instance_type} instances with {operating_system} and {tenancy} tenancy in {ec2_region} is ${price} per hour:")
-       # print(f"${price} per hour")
+while count < len(inst_list["inst_type"]):
+    cleanstr=inst_list["inst_type"].to_string(index=False)
+    clean1=cleanstr.strip()
+    print(clean1)
 
     count += 1
 
+#while count <= len(inst_list[0]):
+#    # Get the prices of EC2 instances
+#    clean_inst =inst_list.to_string(index=False) # inst_list.inst_type.replace('\n','',regex=True)
+#    print(clean_inst)
+
+    #ec2_prices = get_ec2_prices(ec2_region, clean_inst, operating_system, tenancy)
+    #for price in ec2_prices:
+    #    print(f"Prices of {instance_type} instances with {operating_system} and {tenancy} tenancy in {ec2_region} is ${price} per hour:")
+    #   # print(f"${price} per hour")
+
+#    count += 1

@@ -77,19 +77,17 @@ pickcol=["inst_type"]
 #inst_list= pd.read_csv('inventory.csv', index_col="inst_type", usecols=pickcol)
 inst_list= pd.read_csv('inventory.csv')
 
-print(inst_list)
-#print(inst_list.columns)
-#print(inst_list.info)
-#print(inst_list.inst_type.to_string(index=False))
-#print(len(inst_list.inst_type))
-#print(inst_list.head())
-count = 0
-while count < len(inst_list["inst_type"]):
-    cleanstr=inst_list["inst_type"].to_string(index=False)
-    clean1=cleanstr.strip()
-    print(clean1)
+for instance_type in inst_list.inst_type:
+    print(instance_type)
 
-    count += 1
+# Get the prices of EC2 instances
+for instance_type in inst_list.inst_type:
+    clean_inst = instance_type.replace('\n', '', regex=True)
+    ec2_prices = get_ec2_prices(ec2_region, clean_inst, operating_system, tenancy)
+    for price in ec2_prices:
+        print(f"Prices of {instance_type} instances with {operating_system} and {tenancy} tenancy in {ec2_region} is ${price} per hour:")
+
+
 
 #while count <= len(inst_list[0]):
 #    # Get the prices of EC2 instances

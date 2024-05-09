@@ -6,7 +6,8 @@ import pandas as pd
 
 
 #session = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-session = boto3.Session(profile_name="citrus_lab")
+#session = boto3.Session(profile_name="citrus_lab")
+session = boto3.Session(profile_name="lab")
 credentials = session.get_credentials()
 
 def get_ec2_prices(region, instance_type, operating_system, tenancy):
@@ -77,13 +78,15 @@ pickcol=["inst_type"]
 #inst_list= pd.read_csv('inventory.csv', index_col="inst_type", usecols=pickcol)
 inst_list= pd.read_csv('inventory.csv')
 
-for instance_type in inst_list.inst_type:
-    print(instance_type)
+#for instance_type in inst_list.inst_type:
+#    print(instance_type)
 
 # Get the prices of EC2 instances
 for instance_type in inst_list.inst_type:
-    clean_inst = instance_type.replace('\n', '', regex=True)
-    ec2_prices = get_ec2_prices(ec2_region, clean_inst, operating_system, tenancy)
+#    print(instance_type)
+    #clean_inst = instance_type.replace('\n', '', regex=True)
+    #print(clean_inst)
+    ec2_prices = get_ec2_prices(ec2_region, instance_type, operating_system, tenancy)
     for price in ec2_prices:
         print(f"Prices of {instance_type} instances with {operating_system} and {tenancy} tenancy in {ec2_region} is ${price} per hour:")
 

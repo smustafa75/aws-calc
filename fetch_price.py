@@ -6,8 +6,8 @@ import pandas as pd
 
 
 #session = boto3.session.Session(aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
-#session = boto3.Session(profile_name="citrus_lab")
-session = boto3.Session(profile_name="lab")
+session = boto3.Session(profile_name="citrus_lab")
+#session = boto3.Session(profile_name="lab")
 credentials = session.get_credentials()
 
 def get_ec2_prices(region, instance_type, operating_system, tenancy):

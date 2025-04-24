@@ -1,0 +1,6 @@
+inst_type,disk,disk_type,environment,count
+t3.xlarge,500,gp3,prod,2
+m5.xlarge,200,gp3,dev,3
+c6i.large,400,gp3,prod,5
+t3.large,100,gp3,test,2
+m5.2xlarge,300,gp3,dev,1

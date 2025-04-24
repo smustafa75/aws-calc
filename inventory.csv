@@ -1,3 +1,4 @@
 inst_type,disk,disk_type
 t3.xlarge,500,gp3
 m5.xlarge,200,gp3
+c6i.large,400,gp3

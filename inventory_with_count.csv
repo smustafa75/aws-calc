@@ -1,0 +1,4 @@
+inst_type,disk,disk_type,count,environment
+t3.xlarge,500,gp3,2,test
+m5.xlarge,200,gp3,3,dev
+c6i.large,400,gp3,1,prod

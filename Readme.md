@@ -1,6 +1,6 @@
 # AWS EC2 Price Fetcher
 
-This tool fetches accurate EC2 instance pricing from AWS Pricing API based on instance types specified in an input file (CSV or Excel).
+This tool fetches accurate EC2 instance pricing from AWS Pricing API based on instance types specified in an input file (CSV or Excel)..
 
 ## Project Structure
 

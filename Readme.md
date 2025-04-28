@@ -14,6 +14,41 @@ A tool that fetches EC2 instance pricing from AWS Pricing API based on instance 
 - Outputs to console or file (CSV/Excel)
 - Configurable region, OS, and tenancy
 
+## Optimization Summary
+
+The `fetch_price_clean.py` script was optimized to create `fetch_price_clean_optimized.py`, focusing on reducing code length while maintaining all functionality and improving readability.
+
+### Key Optimizations
+
+1. **Global Constants**: 
+   - Moved the region mapping dictionary outside the function to avoid recreating it on each call
+   - Defined it as a global constant for better performance
+
+2. **Code Structure Improvements**:
+   - Created a dedicated `process_instance_row()` function to handle individual row processing
+   - Improved function organization for better code reuse
+   - Reduced redundancy in data processing logic
+
+3. **Simplified Logic**:
+   - Replaced nested if-else statements with more concise conditional expressions
+   - Used Python's ternary operators for cleaner code
+   - Consolidated file reading and writing logic
+
+4. **Streamlined Error Handling**:
+   - Made error messages more concise while maintaining clarity
+   - Improved error detection and reporting
+   - Consolidated error handling patterns
+
+5. **Optimized DataFrame Operations**:
+   - Reduced redundant code in DataFrame manipulation
+   - Improved column selection logic
+   - More efficient handling of data transformations
+
+6. **Performance Improvements**:
+   - More efficient null checking
+   - Reduced unnecessary variable assignments
+   - Simplified conditional expressions using short-circuit evaluation
+
 ## Requirements
 - Python 3.6+
 - Packages: boto3, pandas

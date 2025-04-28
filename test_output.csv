@@ -1,0 +1,14 @@
+inst_type,disk,disk_type,environment,count,hourly_price,monthly_price,total_monthly
+t3.xlarge,500,gp3,prod,2,0.2006,144.432,288.864
+m5.xlarge,200,gp3,dev,3,0.235,169.2,507.59999999999997
+c6i.large,400,gp3,prod,5,0.1056,76.032,380.15999999999997
+t3.large,100,gp3,test,2,0.1003,72.216,144.432
+m5.2xlarge,300,gp3,dev,1,0.471,339.11999999999995,339.11999999999995
+,,,,,,,
+,,,,,,,
+=== Environment Totals ===,,,,,,,
+dev,,,,,,,846.7199999999999
+prod,,,,,,,669.0239999999999
+test,,,,,,,144.432
+,,,,,,,
+GRAND TOTAL,,,,,,,1660.1759999999997
